@@ -115,7 +115,7 @@ JSON mode is sent independently from reasoning:
 
 ## Model capabilities
 
-The model selector keeps the OpenRouter model `id` as the option value. When metadata is available, labels/descriptions include context length, pricing, reasoning support, and supported parameters.
+The model selector keeps the OpenRouter model `id` as the option value. When metadata is available, labels/descriptions include context length, pricing, reasoning support, and supported parameters. OpenRouter prices are returned as USD per token and displayed as USD per 1M tokens, for example `$0.25/M input · $1.50/M output`.
 
 `Reasoning Effort` is kept as a static dropdown for compatibility with n8n community nodes. Dynamic effort filtering by selected model is not implemented because load options cannot be relied on to safely reshape nested collection options across all supported n8n versions. Use `Validate Model Capabilities` for optional runtime checks.
 

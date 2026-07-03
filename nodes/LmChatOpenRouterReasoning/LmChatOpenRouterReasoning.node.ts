@@ -324,13 +324,33 @@ function getChatOptions(options: OpenRouterOptions): ChatOpenRouterOptions {
 	return chatOptions;
 }
 
-function formatPrice(price: string | undefined): string | undefined {
-	if (!price) return undefined;
+function formatPricePerMillion(value: unknown): string | undefined {
+	if (value === undefined || value === null || value === '') return undefined;
 
-	const numericPrice = Number(price);
+	const numericPrice = Number(value);
 	if (!Number.isFinite(numericPrice)) return undefined;
 
-	return `$${numericPrice.toExponential(2)}`;
+	const pricePerMillion = numericPrice * 1_000_000;
+	if (pricePerMillion === 0) return '$0/M';
+
+	const formattedPrice = pricePerMillion.toLocaleString('en-US', {
+		minimumFractionDigits: 0,
+		maximumFractionDigits: 4,
+		useGrouping: false,
+	});
+
+	return `$${formattedPrice}/M`;
+}
+
+function formatPricingDescription(model: OpenRouterModel): string | undefined {
+	const priceIn = formatPricePerMillion(model.pricing?.prompt);
+	const priceOut = formatPricePerMillion(model.pricing?.completion);
+	const parts = [
+		priceIn ? `${priceIn} input` : undefined,
+		priceOut ? `${priceOut} output` : undefined,
+	].filter(Boolean);
+
+	return parts.length ? parts.join(' · ') : undefined;
 }
 
 function formatContextLength(contextLength: number | undefined): string | undefined {
@@ -356,11 +376,9 @@ function formatModelOption(model: OpenRouterModel): INodePropertyOptions | undef
 	const reasoning = getReasoningDescription(model);
 	if (reasoning) labelParts.push(reasoning);
 
-	const priceIn = formatPrice(model.pricing?.prompt);
-	const priceOut = formatPrice(model.pricing?.completion);
 	const descriptionParts = [
 		model.name,
-		priceIn && priceOut ? `price in/out: ${priceIn}/${priceOut}` : undefined,
+		formatPricingDescription(model),
 		model.supported_parameters?.length
 			? `supported: ${model.supported_parameters.join(', ')}`
 			: undefined,
