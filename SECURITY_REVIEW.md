@@ -16,8 +16,8 @@ Reviewed the package for public npm publication risk. The review covered source 
 - `npm.cmd run lint`
 - `npm.cmd pack --dry-run --json`
 - `npm.cmd pack`
-- `tar -tf n8n-nodes-openrouter-reasoning-0.1.0.tgz`
-- `tar -xOf n8n-nodes-openrouter-reasoning-0.1.0.tgz <published file> | rg -n -i <sensitive patterns>`
+- `tar -tf n8n-nodes-openrouter-reasoning-0.2.0.tgz`
+- `tar -xOf n8n-nodes-openrouter-reasoning-0.2.0.tgz <published file> | rg -n -i <sensitive patterns>`
 
 `npm.cmd pack` was run with a local npm cache directory inside the workspace because the default npm cache path was not writable in this environment.
 
@@ -38,7 +38,7 @@ The package does not publish `node_modules`, `.git`, `.agents`, `.npm-cache`, `.
 
 - No API keys, bearer tokens, cookies, passwords, private keys, real OpenRouter keys, credential IDs, workflow IDs, container IDs, customer data, student data, prompts, or private operational configuration were found in files published to npm.
 - The credential reference is generic n8n configuration: the node references `openRouterApi` and reads `credentials.apiKey` at runtime. No credential value or default key is stored in this package.
-- Search hits for words such as `credential`, `apiKey`, `token`, and `workflow` were reviewed and are code or documentation false positives.
+- Search hits for words such as `credential`, `apiKey`, `token`, `Authorization`, `workflow`, and `client` were reviewed and are code or documentation false positives.
 - `package-lock.json` contains dependency names and registry metadata only. It is not included in the npm tarball.
 - The original README contained a machine-specific local install path. It was replaced with a generic placeholder path.
 - The package uses a restrictive `"files"` allowlist: `dist`, `README.md`, and `LICENSE.md`.
@@ -52,6 +52,7 @@ The package does not publish `node_modules`, `.git`, `.agents`, `.npm-cache`, `.
 - Updated `LICENSE.md` copyright ownership to `n8n-nodes-openrouter-reasoning contributors`.
 - Added a concise attribution section to `README.md`.
 - Regenerated the npm tarball after corrections.
+- Re-reviewed the 0.2.0 package after adding provider routing, expanded reasoning options, extra body JSON, and model capability metadata.
 
 ## Conclusion
 

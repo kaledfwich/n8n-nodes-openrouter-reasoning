@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-openrouter-reasoning",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "OpenRouter Chat Model community node for n8n with reasoning.effort support.",
 	"license": "MIT",
 	"keywords": [
